@@ -47,7 +47,7 @@ export async function POST(req) {
               </a>
             </div>
             <p style="color: #71717a; font-size: 14px; line-height: 1.5;">
-              This link is unique to your purchase. If you have any questions, reply to this email or reach out at hello@lucidstack.ai.
+              This link is unique to your purchase. If you have any questions, reply to this email or reach out at support@lucidstack.ai.
             </p>
             <hr style="border: none; border-top: 1px solid #27272a; margin: 24px 0;" />
             <p style="color: #52525b; font-size: 12px;">

@@ -55,8 +55,8 @@ export default function Success() {
         </div>
         <p className="text-sm text-zinc-500">
           Questions? Reach out at{' '}
-          <a href="mailto:hello@lucidstack.ai" className="text-indigo-400 hover:text-indigo-300">
-            hello@lucidstack.ai
+          <a href="mailto:support@lucidstack.ai" className="text-indigo-400 hover:text-indigo-300">
+            support@lucidstack.ai
           </a>
         </p>
       </div>

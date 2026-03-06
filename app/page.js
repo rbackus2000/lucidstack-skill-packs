@@ -174,8 +174,8 @@ export default function Home() {
             { q: 'What are Agent Skills?', a: 'Agent Skills are structured instruction files (SKILL.md) that give AI agents like Claude Code specialized capabilities. Think of them as plug-and-play expertise modules — drop one in and your agent gains a new superpower.' },
             { q: 'What do I need to use these?', a: 'Claude Code CLI or an OpenClaw gateway. The skills work with any setup that reads SKILL.md files from a workspace directory.' },
             { q: 'Can I customize the skills?', a: 'Absolutely. Every skill is a text file — modify the prompts, workflows, and configurations to match your exact use case. That\'s the point.' },
-            { q: 'What if it\'s not for me?', a: '30-day money-back guarantee, no questions asked. Email hello@lucidstack.ai and we\'ll refund you immediately.' },
-            { q: 'Do you offer team licenses?', a: 'Yes. Contact hello@lucidstack.ai for multi-seat pricing.' },
+            { q: 'What if it\'s not for me?', a: '30-day money-back guarantee, no questions asked. Email support@lucidstack.ai and we\'ll refund you immediately.' },
+            { q: 'Do you offer team licenses?', a: 'Not yet, but we\'re working on it. Contact support@lucidstack.ai if you need multi-seat pricing and we\'ll work something out.' },
           ].map((item) => (
             <div key={item.q} className="border-b border-zinc-800 py-5">
               <h3 className="text-base font-semibold text-white mb-2">{item.q}</h3>
