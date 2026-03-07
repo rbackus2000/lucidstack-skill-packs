@@ -8,39 +8,39 @@ const skills = [
     description: 'AI-powered lead research, personalized cold emails, and automated follow-up sequences. Your SDR that never sleeps.',
     features: ['Lead intelligence research', 'Personalized email drafting', 'Follow-up cadence management', 'Response analysis & objection handling'],
     icon: '🎯',
-    priceId: 'price_1T7oGHAOEKxDDK6S9k28oHJw',
+    priceId: 'price_1T8MVl9TtKvyXKLaZRvFOCfW',
   },
   {
     name: 'Content Pipeline Agent',
     description: 'End-to-end content ops. Trend monitoring, multi-platform drafting, editorial calendar, and publishing workflows.',
     features: ['Industry trend monitoring', 'LinkedIn, X, blog, newsletter drafting', 'Editorial calendar management', 'Content repurposing engine'],
     icon: '📝',
-    priceId: 'price_1T7oGHAOEKxDDK6Suij9kKUp',
+    priceId: 'price_1T8MVl9TtKvyXKLaOv4t1GuG',
   },
   {
     name: 'Code Review Agent',
     description: 'Senior-engineer-level code reviews on autopilot. Security audits, performance analysis, and pre-commit checks.',
     features: ['OWASP security scanning', 'Performance bottleneck detection', 'Pre-commit quality gates', 'Architecture review'],
     icon: '🔍',
-    priceId: 'price_1T7oGHAOEKxDDK6StR48de1S',
+    priceId: 'price_1T8MVl9TtKvyXKLaW8xQtz2j',
   },
   {
     name: 'Customer Support Agent',
     description: 'AI tier-1 support that sounds human. Ticket triage, response drafting, KB management, and customer health tracking.',
     features: ['Intelligent ticket triage', 'Human-sounding response drafts', 'Auto-learning knowledge base', 'Customer health scoring'],
     icon: '💬',
-    priceId: 'price_1T7oGHAOEKxDDK6S98yB0024',
+    priceId: 'price_1T8MVm9TtKvyXKLaHYUsf7lK',
   },
   {
     name: 'SEO Research Agent',
     description: 'Agency-quality SEO without the agency. Keyword research, competitor analysis, content briefs, and technical audits.',
     features: ['Keyword cluster research', 'Competitor gap analysis', 'On-page SEO audits', 'SEO content brief generation'],
     icon: '📊',
-    priceId: 'price_1T7oGIAOEKxDDK6SD9zglTOh',
+    priceId: 'price_1T8MVm9TtKvyXKLaBW90KqF7',
   },
 ]
 
-const bundlePriceId = 'price_1T7oGGAOEKxDDK6S3nDfyWQa'
+const bundlePriceId = 'price_1T8MVl9TtKvyXKLaOp2LwQ5k'
 
 export default function Home() {
   const [loading, setLoading] = useState(null)
