@@ -40,7 +40,7 @@ const skills = [
   },
 ]
 
-const bundlePriceId = 'price_1T8MVl9TtKvyXKLaOp2LwQ5k'
+const bundlePriceId = 'price_1T8Miz9TtKvyXKLaDauenDe4'
 
 export default function Home() {
   const [loading, setLoading] = useState(null)
@@ -78,15 +78,34 @@ export default function Home() {
             Drop them in, watch them work. Built by builders, for builders.
           </p>
 
+          {/* Free Sample CTA */}
+          <div className="glass rounded-2xl p-6 max-w-lg mx-auto mb-6 border border-emerald-500/20">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h3 className="text-lg font-semibold text-white">🎁 Free Sample — SEO Research Agent</h3>
+                <p className="text-sm text-zinc-400">Try before you buy. Full skill, no strings.</p>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-emerald-400">FREE</p>
+              </div>
+            </div>
+            <a
+              href="/downloads/seo-research-agent-free.zip"
+              className="block w-full text-center bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 px-6 rounded-xl transition-all duration-200"
+            >
+              Download Free Sample →
+            </a>
+          </div>
+
           {/* Bundle CTA */}
           <div className="glass glow rounded-2xl p-8 max-w-lg mx-auto mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">Full Bundle — All 5 Skills</h3>
-                <p className="text-sm text-zinc-400">Save $46 vs buying individually</p>
+                <p className="text-sm text-zinc-400">Launch price — limited time</p>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-bold text-white">$49</p>
+                <p className="text-3xl font-bold text-white">$29</p>
                 <p className="text-sm text-zinc-500 line-through">$95</p>
               </div>
             </div>
