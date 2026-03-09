@@ -372,7 +372,7 @@ export default function Home() {
               <div className="flex items-end justify-between mb-14">
                 <div>
                   <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">Catalog</p>
-                  <h2 className="text-3xl font-bold">Five agents. Ready to deploy.</h2>
+                  <h2 className="text-3xl font-bold">Six agents. Ready to deploy.</h2>
                 </div>
                 <p className="mono text-xs text-[var(--text-3)]">v1.1.0</p>
               </div>
@@ -437,7 +437,7 @@ export default function Home() {
                           onClick={() => handleCheckout(skill.priceId, skill.name)}
                           disabled={loading === skill.name}
                           className="mono text-[12px] font-medium text-[var(--text-3)] group-hover:text-[var(--text)] transition-colors disabled:opacity-40">
-                          {loading === skill.name ? '...' : '$19 →'}
+                          {loading === skill.name ? '...' : skill.featured ? '$29 →' : '$19 →'}
                         </button>
                       )}
                     </div>
