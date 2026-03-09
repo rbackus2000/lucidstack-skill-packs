@@ -454,9 +454,10 @@ export default function Home() {
                   </div>
                   <div className="col-span-4">
                     <p className="text-[14px] text-[var(--text-2)]">
-                      All five skills. <span className="line-through text-[var(--text-3)]">$95</span> → <span className="font-semibold text-[var(--text)]">$29</span>
+                      All five operational skills. <span className="line-through text-[var(--text-3)]">$95</span> → <span className="font-semibold text-[var(--text)]">$29</span>
                       <span className="mono text-[11px] text-[var(--accent)] ml-2">save 69%</span>
                     </p>
+                    <p className="text-[12px] text-[var(--text-3)] mt-1">Premium Web Design sold separately</p>
                   </div>
                   <div className="col-span-3">
                     <p className="mono text-[12px] text-[var(--text-3)]">Launch price · limited time</p>
@@ -541,7 +542,10 @@ export default function Home() {
                       <span className="mono text-[10px] font-medium text-[var(--accent)] bg-white px-2 py-0.5 rounded-full">BEST VALUE</span>
                     </div>
                     <p className="text-[13px] text-[var(--text-3)] mt-1">
-                      All 5 skills · <span className="line-through">$95</span> → $29 · save 69%
+                      All 5 operational skills · <span className="line-through">$95</span> → $29 · save 69%
+                    </p>
+                    <p className="text-[11px] text-[var(--text-3)] mt-0.5">
+                      Does not include Premium Web Design
                     </p>
                   </div>
                   <button
