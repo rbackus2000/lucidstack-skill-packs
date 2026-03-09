@@ -8,68 +8,58 @@ const skills = [
   {
     id: 'sales',
     name: 'Sales Outreach',
-    tag: 'SDR',
-    description: 'Lead research → personalized emails → follow-up sequences. Your SDR that never sleeps.',
-    capabilities: ['Lead intelligence & scoring', 'Multi-touch email sequences', 'Objection handling playbooks', 'CRM-ready output format'],
+    description: 'Lead research → personalized emails → follow-up sequences',
+    capabilities: ['Lead intelligence & scoring', 'Multi-touch email sequences', 'Objection handling playbooks', 'CRM-ready output'],
     lines: 287,
     priceId: 'price_1T8MVl9TtKvyXKLaZRvFOCfW',
-    accent: '#3b82f6',
   },
   {
     id: 'content',
     name: 'Content Pipeline',
-    tag: 'OPS',
-    description: 'Trend monitoring → drafting → publishing. Multi-platform content on autopilot.',
-    capabilities: ['Industry trend detection', 'Platform-native formatting', 'Editorial calendar logic', 'Content repurposing chains'],
+    description: 'Trend monitoring → drafting → multi-platform publishing',
+    capabilities: ['Industry trend detection', 'Platform-native formatting', 'Editorial calendar logic', 'Content repurposing'],
     lines: 312,
     priceId: 'price_1T8MVl9TtKvyXKLaOv4t1GuG',
-    accent: '#a855f7',
   },
   {
     id: 'code',
     name: 'Code Review',
-    tag: 'ENG',
-    description: 'Security scanning → performance analysis → architecture review. Senior engineer on demand.',
+    description: 'Security scanning → performance analysis → architecture review',
     capabilities: ['OWASP vulnerability detection', 'Performance bottleneck analysis', 'Pre-commit quality gates', 'Refactoring suggestions'],
     lines: 274,
     priceId: 'price_1T8MVl9TtKvyXKLaW8xQtz2j',
-    accent: '#f59e0b',
   },
   {
     id: 'support',
     name: 'Customer Support',
-    tag: 'CX',
-    description: 'Ticket triage → response drafting → escalation routing. Tier-1 that sounds human.',
-    capabilities: ['Priority-based ticket triage', 'Tone-matched responses', 'Knowledge base integration', 'Customer health scoring'],
+    description: 'Ticket triage → response drafting → escalation routing',
+    capabilities: ['Priority-based triage', 'Tone-matched responses', 'Knowledge base integration', 'Customer health scoring'],
     lines: 298,
     priceId: 'price_1T8MVm9TtKvyXKLaHYUsf7lK',
-    accent: '#10b981',
   },
   {
     id: 'seo',
     name: 'SEO Research',
-    tag: 'GRO',
-    description: 'Keyword research → competitor analysis → content briefs. Agency output, zero agency fees.',
-    capabilities: ['Keyword cluster mapping', 'Competitor gap analysis', 'SERP feature targeting', 'SEO-optimized content briefs'],
+    description: 'Keyword research → competitor analysis → content briefs',
+    capabilities: ['Keyword cluster mapping', 'Competitor gap analysis', 'SERP feature targeting', 'Content optimization briefs'],
     lines: 324,
     priceId: 'price_1T8MVm9TtKvyXKLaBW90KqF7',
-    accent: '#ec4899',
     free: true,
   },
 ]
 
 const bundlePriceId = 'price_1T8Miz9TtKvyXKLaDauenDe4'
 
-// ─── Animated section wrapper ───────────────────────────────────────
-function FadeIn({ children, className = '', delay = 0 }) {
+// ─── Section animation ──────────────────────────────────────────────
+function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-60px' })
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={className}
     >
       {children}
@@ -77,90 +67,10 @@ function FadeIn({ children, className = '', delay = 0 }) {
   )
 }
 
-// ─── Skill card ─────────────────────────────────────────────────────
-function SkillCard({ skill, index, onCheckout, loading }) {
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <FadeIn delay={index * 0.08}>
-      <motion.div
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={() => setHovered(false)}
-        className="group relative"
-      >
-        {/* Top accent line */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: skill.accent }}
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: hovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        />
-
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-none p-7 h-full flex flex-col
-          group-hover:border-[var(--border-hover)] transition-colors duration-300">
-          
-          {/* Header */}
-          <div className="flex items-start justify-between mb-5">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="mono text-[10px] font-semibold tracking-widest px-2 py-0.5 border"
-                  style={{ color: skill.accent, borderColor: skill.accent + '40' }}>
-                  {skill.tag}
-                </span>
-                {skill.free && (
-                  <span className="mono text-[10px] font-semibold tracking-widest text-[var(--accent)] px-2 py-0.5 border border-[var(--accent-border)]">
-                    FREE
-                  </span>
-                )}
-              </div>
-              <h3 className="text-lg font-semibold text-[var(--text)]">{skill.name}</h3>
-            </div>
-            <span className="mono text-xs text-[var(--text-3)]">{skill.lines} lines</span>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm text-[var(--text-2)] leading-relaxed mb-6">{skill.description}</p>
-
-          {/* Capabilities */}
-          <ul className="space-y-2.5 mb-7 flex-1">
-            {skill.capabilities.map((cap, i) => (
-              <li key={i} className="text-[13px] text-[var(--text-3)] flex items-start gap-2.5">
-                <span className="text-[var(--text-3)] mt-1 text-[8px]">◆</span>
-                {cap}
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA */}
-          {skill.free ? (
-            <a href="/downloads/seo-research-agent-free.zip"
-              className="block w-full text-center py-3 text-sm font-medium border border-[var(--accent-border)] text-[var(--accent)]
-                hover:bg-[var(--accent-dim)] transition-all duration-200 mono tracking-wide">
-              DOWNLOAD FREE →
-            </a>
-          ) : (
-            <button
-              onClick={() => onCheckout(skill.priceId, skill.name)}
-              disabled={loading === skill.name}
-              className="w-full py-3 text-sm font-medium border border-[var(--border)] text-[var(--text-2)]
-                hover:border-[var(--border-hover)] hover:text-[var(--text)] transition-all duration-200 mono tracking-wide disabled:opacity-40">
-              {loading === skill.name ? 'LOADING...' : '$19 →'}
-            </button>
-          )}
-        </div>
-      </motion.div>
-    </FadeIn>
-  )
-}
-
 // ─── Main ───────────────────────────────────────────────────────────
 export default function Home() {
   const [loading, setLoading] = useState(null)
-  const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -60])
+  const [hoveredSkill, setHoveredSkill] = useState(null)
 
   const handleCheckout = async (priceId, label) => {
     setLoading(label)
@@ -179,333 +89,365 @@ export default function Home() {
   return (
     <>
       {/* ─── Nav ─── */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-[var(--bg)]/80 backdrop-blur-xl border-b border-[var(--border)]">
-        <div className="max-w-[1200px] mx-auto px-8 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <span className="font-semibold text-sm tracking-tight">LucidStack</span>
-            <span className="text-[var(--text-3)] text-xs">·</span>
-            <span className="mono text-xs text-[var(--text-3)]">Agent Skills</span>
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="#skills" className="text-xs text-[var(--text-3)] hover:text-[var(--text)] transition-colors">Skills</a>
-            <a href="#pricing" className="text-xs text-[var(--text-3)] hover:text-[var(--text)] transition-colors">Pricing</a>
-            <a href="mailto:support@lucidstack.ai" className="text-xs text-[var(--text-3)] hover:text-[var(--text)] transition-colors">Contact</a>
+      <nav className="sticky top-0 z-50 bg-[var(--bg)]/90 backdrop-blur-lg border-b border-[var(--border)]">
+        <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
+          <span className="font-semibold text-[15px] tracking-tight text-[var(--text)]">LucidStack</span>
+          <div className="flex items-center gap-8">
+            <a href="#skills" className="text-[13px] text-[var(--text-2)] hover:text-[var(--text)] transition-colors">Skills</a>
+            <a href="#pricing" className="text-[13px] text-[var(--text-2)] hover:text-[var(--text)] transition-colors">Pricing</a>
+            <a href="mailto:support@lucidstack.ai" className="text-[13px] text-[var(--text-2)] hover:text-[var(--text)] transition-colors">Contact</a>
           </div>
         </div>
       </nav>
 
       <main>
         {/* ─── Hero ─── */}
-        <section ref={heroRef} className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
-          {/* Background grid */}
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px',
-          }} />
-          
-          {/* Center glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]
-            bg-[var(--accent)] opacity-[0.02] rounded-full blur-[120px]" />
-
-          <motion.div style={{ opacity: heroOpacity, y: heroY }} className="relative z-10 text-center px-8 max-w-3xl">
+        <section className="pt-24 pb-20 px-6">
+          <div className="max-w-[1100px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="max-w-2xl"
             >
-              <div className="mono text-[11px] tracking-[0.2em] text-[var(--accent)] mb-8 font-medium">
-                FOR CLAUDE CODE · OPENCLAW · ANY SKILL.MD SYSTEM
+              <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-6">
+                Agent Skills for Claude Code
+              </p>
+              <h1 className="text-[clamp(2.8rem,5.5vw,4.2rem)] font-bold leading-[1.08] tracking-tight mb-6">
+                Teach Claude<br />
+                once. Benefit<br />
+                every session.
+              </h1>
+              <p className="text-xl text-[var(--text-2)] leading-relaxed max-w-lg mb-10">
+                Drop a SKILL.md file into your workspace. Claude loads it automatically 
+                and becomes a specialized agent. No configuration needed.
+              </p>
+              <div className="flex items-center gap-4">
+                <a href="/downloads/seo-research-agent-free.zip"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-[14px] font-medium
+                    rounded-full hover:bg-[var(--text-2)] transition-colors">
+                  Download free sample
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3 6.5M7 10l4-3.5M2 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </a>
+                <button
+                  onClick={() => handleCheckout(bundlePriceId, 'hero')}
+                  disabled={loading === 'hero'}
+                  className="inline-flex items-center gap-2 px-6 py-3 text-[14px] font-medium text-[var(--text-2)]
+                    hover:text-[var(--text)] transition-colors disabled:opacity-40">
+                  {loading === 'hero' ? 'Loading...' : 'Get all 5 — $29 →'}
+                </button>
               </div>
             </motion.div>
 
-            <motion.h1
+            {/* Terminal */}
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight mb-8"
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mt-16 max-w-2xl"
             >
-              One file.
-              <br />
-              <span className="text-[var(--text-3)]">Instant agent.</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-lg text-[var(--text-2)] max-w-lg mx-auto leading-relaxed mb-12"
-            >
-              Drop a SKILL.md into your workspace. Claude reads it and becomes a specialized agent.
-              No setup. No configuration. No prompt engineering.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex items-center justify-center gap-4"
-            >
-              <a href="/downloads/seo-research-agent-free.zip"
-                className="px-7 py-3 bg-[var(--accent)] text-[var(--bg)] font-semibold text-sm
-                  hover:brightness-110 transition-all duration-200">
-                Download free sample
-              </a>
-              <button
-                onClick={() => handleCheckout(bundlePriceId, 'hero-bundle')}
-                disabled={loading === 'hero-bundle'}
-                className="px-7 py-3 border border-[var(--border)] text-sm text-[var(--text-2)]
-                  hover:border-[var(--border-hover)] hover:text-[var(--text)] transition-all duration-200 disabled:opacity-40">
-                {loading === 'hero-bundle' ? 'Loading...' : 'All 5 for $29 →'}
-              </button>
-            </motion.div>
-
-            {/* Terminal preview */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="mt-20 text-left max-w-xl mx-auto"
-            >
-              <div className="bg-[var(--surface)] border border-[var(--border)] overflow-hidden">
-                <div className="px-4 py-2.5 border-b border-[var(--border)] flex items-center gap-6">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-                  </div>
-                  <span className="mono text-[11px] text-[var(--text-3)]">~/project</span>
+              <div className="bg-[var(--code-bg)] rounded-xl overflow-hidden shadow-2xl shadow-black/10">
+                <div className="px-4 py-3 flex items-center gap-2 border-b border-white/5">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                  <span className="mono text-[11px] text-white/30 ml-4">Terminal</span>
                 </div>
-                <div className="p-5 mono text-[13px] leading-[1.8] text-[var(--text-3)]">
-                  <div><span className="text-[var(--accent)]">$</span> cp sales-outreach-agent/SKILL.md ~/.claude/skills/</div>
-                  <div className="text-[var(--text-3)] opacity-50">copied.</div>
-                  <div className="mt-2"><span className="text-[var(--accent)]">$</span> claude</div>
-                  <div className="mt-1 text-[var(--text-2)]">Skill loaded: <span className="text-[var(--accent)]">sales-outreach-agent</span></div>
-                  <div className="text-[var(--text-2)]">Ready. Try: &quot;Research leads at Acme Corp&quot;</div>
-                  <div className="mt-2"><span className="text-[var(--accent)]">$</span> <span className="animate-pulse">▊</span></div>
+                <div className="p-6 mono text-[13px] leading-[2] text-white/60">
+                  <div><span className="text-emerald-400">~</span> cp skill.md .claude/skills/sales-outreach/</div>
+                  <div className="text-white/25">done.</div>
+                  <div className="mt-1"><span className="text-emerald-400">~</span> claude</div>
+                  <div className="text-white/80">Loaded: <span className="text-amber-300">sales-outreach-agent</span> <span className="text-white/30">(287 lines)</span></div>
+                  <div className="text-white/50">Try: &ldquo;Research leads at Stripe&rdquo;</div>
+                  <div className="mt-1"><span className="text-emerald-400">~</span> <span className="animate-pulse text-white/60">▊</span></div>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="w-5 h-8 border border-[var(--border)] rounded-full flex items-start justify-center p-1.5"
-            >
-              <div className="w-1 h-1.5 bg-[var(--text-3)] rounded-full" />
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* ─── How it works ─── */}
-        <section className="py-32 px-8">
-          <div className="max-w-[1200px] mx-auto">
-            <FadeIn>
-              <div className="grid grid-cols-12 gap-8 items-center">
-                <div className="col-span-5">
-                  <span className="mono text-[11px] tracking-[0.2em] text-[var(--accent)] font-medium">HOW IT WORKS</span>
-                  <h2 className="text-3xl font-bold mt-4 mb-6 leading-tight">
-                    No SDK.<br />No config.<br />
-                    <span className="text-[var(--text-3)]">Just markdown.</span>
-                  </h2>
-                  <p className="text-[var(--text-2)] leading-relaxed">
-                    A skill is a structured markdown file that teaches Claude a specific workflow.
-                    Trigger phrases, examples, edge cases, and troubleshooting — all in one file.
-                    Built following Anthropic&apos;s official guide.
-                  </p>
-                </div>
-                <div className="col-span-7">
-                  <div className="space-y-px">
-                    {[
-                      { num: '01', title: 'Download the skill', detail: 'Each skill is a single SKILL.md file with optional config templates.' },
-                      { num: '02', title: 'Drop it in your workspace', detail: 'Copy to your skills/ or .claude/ directory. No installation needed.' },
-                      { num: '03', title: 'Start using it', detail: 'Claude auto-detects the skill and activates its workflows on matching prompts.' },
-                    ].map((step, i) => (
-                      <FadeIn key={i} delay={i * 0.12}>
-                        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 flex gap-6
-                          hover:border-[var(--border-hover)] transition-colors duration-300 group">
-                          <span className="mono text-2xl font-bold text-[var(--text-3)] group-hover:text-[var(--accent)] transition-colors">
-                            {step.num}
-                          </span>
-                          <div>
-                            <h3 className="font-semibold mb-1">{step.title}</h3>
-                            <p className="text-sm text-[var(--text-3)]">{step.detail}</p>
-                          </div>
-                        </div>
-                      </FadeIn>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
           </div>
         </section>
 
-        {/* ─── Skills grid ─── */}
-        <section id="skills" className="py-32 px-8 border-t border-[var(--border)]">
-          <div className="max-w-[1200px] mx-auto">
-            <FadeIn>
-              <div className="flex items-end justify-between mb-16">
-                <div>
-                  <span className="mono text-[11px] tracking-[0.2em] text-[var(--accent)] font-medium">CATALOG</span>
-                  <h2 className="text-3xl font-bold mt-4">Five agents, ready to deploy.</h2>
-                </div>
-                <span className="mono text-xs text-[var(--text-3)]">v1.1.0 · Anthropic-compliant</span>
-              </div>
-            </FadeIn>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)]">
-              {skills.map((skill, i) => (
-                <SkillCard key={skill.id} skill={skill} index={i} onCheckout={handleCheckout} loading={loading} />
-              ))}
-
-              {/* Bundle card */}
-              <FadeIn delay={skills.length * 0.08}>
-                <div className="bg-[var(--surface)] border border-[var(--accent-border)] p-7 h-full flex flex-col relative">
-                  <div className="absolute top-0 left-0 right-0 h-px bg-[var(--accent)]" />
-                  
-                  <div className="flex items-start justify-between mb-5">
-                    <div>
-                      <div className="mono text-[10px] font-semibold tracking-widest text-[var(--accent)] px-2 py-0.5 border border-[var(--accent-border)] mb-2 inline-block">
-                        BUNDLE
+        {/* ─── What's inside ─── */}
+        <section className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[1100px] mx-auto grid grid-cols-12 gap-12">
+            <div className="col-span-4">
+              <Reveal>
+                <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">What&apos;s inside</p>
+                <h2 className="text-3xl font-bold leading-tight mb-5">
+                  Not prompts.<br />
+                  Training manuals.
+                </h2>
+                <p className="text-[var(--text-2)] leading-relaxed text-[15px]">
+                  Each skill is 250–325 lines of structured instructions, examples, 
+                  and edge cases. Built following Anthropic&apos;s official guide.
+                </p>
+              </Reveal>
+            </div>
+            <div className="col-span-8">
+              <Reveal delay={0.15}>
+                <div className="grid grid-cols-2 gap-px bg-[var(--border)]">
+                  {[
+                    { title: 'Trigger Phrases', desc: 'Auto-activates on matching prompts. No manual invocation needed.', num: '5–8', unit: 'per skill' },
+                    { title: 'Workflow Steps', desc: 'Multi-step processes with decision trees and branching logic.', num: '3–5', unit: 'workflows' },
+                    { title: 'Real Examples', desc: 'Concrete input/output pairs Claude can reference during execution.', num: '3', unit: 'per skill' },
+                    { title: 'Troubleshooting', desc: 'Common failure modes and recovery patterns built in.', num: '3', unit: 'per skill' },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-[var(--surface)] p-7 group hover:bg-[var(--surface-2)] transition-colors">
+                      <div className="flex items-baseline justify-between mb-3">
+                        <h3 className="font-semibold text-[15px]">{item.title}</h3>
+                        <span className="mono text-xs text-[var(--text-3)]">{item.num} {item.unit}</span>
                       </div>
-                      <h3 className="text-lg font-semibold">All Five Skills</h3>
+                      <p className="text-[13px] text-[var(--text-3)] leading-relaxed">{item.desc}</p>
                     </div>
-                  </div>
-
-                  <p className="text-sm text-[var(--text-2)] leading-relaxed mb-4">
-                    Every skill in the catalog. One purchase.
-                  </p>
-
-                  <div className="flex items-baseline gap-3 mb-2">
-                    <span className="text-3xl font-bold text-[var(--accent)]">$29</span>
-                    <span className="text-sm text-[var(--text-3)] line-through">$95</span>
-                  </div>
-                  <p className="mono text-xs text-[var(--accent)] mb-7">SAVE 69% · LAUNCH PRICE</p>
-
-                  <div className="flex-1" />
-
-                  <button
-                    onClick={() => handleCheckout(bundlePriceId, 'bundle')}
-                    disabled={loading === 'bundle'}
-                    className="w-full py-3.5 text-sm font-semibold bg-[var(--accent)] text-[var(--bg)]
-                      hover:brightness-110 transition-all duration-200 mono tracking-wide disabled:opacity-40">
-                    {loading === 'bundle' ? 'LOADING...' : 'GET THE BUNDLE →'}
-                  </button>
+                  ))}
                 </div>
-              </FadeIn>
+              </Reveal>
             </div>
           </div>
         </section>
 
-        {/* ─── Pricing comparison ─── */}
-        <section id="pricing" className="py-32 px-8 border-t border-[var(--border)]">
-          <div className="max-w-[800px] mx-auto">
-            <FadeIn>
-              <div className="text-center mb-16">
-                <span className="mono text-[11px] tracking-[0.2em] text-[var(--accent)] font-medium">PRICING</span>
-                <h2 className="text-3xl font-bold mt-4 mb-4">Simple math.</h2>
-                <p className="text-[var(--text-2)]">Try free. Buy what you need.</p>
+        {/* ─── Skills ─── */}
+        <section id="skills" className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[1100px] mx-auto">
+            <Reveal>
+              <div className="flex items-end justify-between mb-14">
+                <div>
+                  <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">Catalog</p>
+                  <h2 className="text-3xl font-bold">Five agents. Ready to deploy.</h2>
+                </div>
+                <p className="mono text-xs text-[var(--text-3)]">v1.1.0</p>
               </div>
-            </FadeIn>
+            </Reveal>
 
-            <FadeIn delay={0.1}>
-              <div className="bg-[var(--surface)] border border-[var(--border)]">
-                <div className="grid grid-cols-4 border-b border-[var(--border)]">
-                  <div className="p-5 border-r border-[var(--border)]">
-                    <span className="mono text-[11px] text-[var(--text-3)]">PLAN</span>
+            <div className="space-y-px">
+              {skills.map((skill, i) => (
+                <Reveal key={skill.id} delay={i * 0.05}>
+                  <div
+                    onMouseEnter={() => setHoveredSkill(skill.id)}
+                    onMouseLeave={() => setHoveredSkill(null)}
+                    className="border-t border-[var(--border)] py-8 grid grid-cols-12 gap-8 items-start group cursor-default
+                      hover:bg-[var(--surface-2)] transition-colors px-6 -mx-6"
+                  >
+                    {/* Name + tag */}
+                    <div className="col-span-3 flex items-start gap-3">
+                      <motion.span
+                        animate={{ x: hoveredSkill === skill.id ? 6 : 0 }}
+                        className="text-lg font-semibold group-hover:text-[var(--accent)] transition-colors"
+                      >
+                        {skill.name}
+                      </motion.span>
+                      {skill.free && (
+                        <span className="mono text-[10px] font-medium text-[var(--accent)] border border-[var(--accent)]/30 px-1.5 py-0.5 rounded">
+                          FREE
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Description */}
+                    <div className="col-span-4">
+                      <p className="text-[14px] text-[var(--text-2)] leading-relaxed">{skill.description}</p>
+                    </div>
+
+                    {/* Capabilities (show on hover) */}
+                    <div className="col-span-3">
+                      <motion.ul
+                        initial={false}
+                        animate={{ opacity: hoveredSkill === skill.id ? 1 : 0 }}
+                        className="space-y-1"
+                      >
+                        {skill.capabilities.map((c, j) => (
+                          <li key={j} className="text-[12px] text-[var(--text-3)]">↳ {c}</li>
+                        ))}
+                      </motion.ul>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="col-span-2 text-right">
+                      {skill.free ? (
+                        <a href="/downloads/seo-research-agent-free.zip"
+                          className="mono text-[12px] font-medium text-[var(--accent)] hover:underline">
+                          Download →
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => handleCheckout(skill.priceId, skill.name)}
+                          disabled={loading === skill.name}
+                          className="mono text-[12px] font-medium text-[var(--text-3)] group-hover:text-[var(--text)] transition-colors disabled:opacity-40">
+                          {loading === skill.name ? '...' : '$19 →'}
+                        </button>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-5 border-r border-[var(--border)] text-center">
-                    <span className="mono text-[11px] text-[var(--text-3)]">FREE</span>
+                </Reveal>
+              ))}
+
+              {/* Bundle row */}
+              <Reveal delay={0.3}>
+                <div className="border-t border-b border-[var(--border)] py-8 grid grid-cols-12 gap-8 items-center
+                  bg-[var(--accent-soft)] px-6 -mx-6">
+                  <div className="col-span-3">
+                    <span className="text-lg font-semibold text-[var(--accent)]">Full Bundle</span>
                   </div>
-                  <div className="p-5 border-r border-[var(--border)] text-center">
-                    <span className="mono text-[11px] text-[var(--text-3)]">INDIVIDUAL</span>
+                  <div className="col-span-4">
+                    <p className="text-[14px] text-[var(--text-2)]">
+                      All five skills. <span className="line-through text-[var(--text-3)]">$95</span> → <span className="font-semibold text-[var(--text)]">$29</span>
+                      <span className="mono text-[11px] text-[var(--accent)] ml-2">save 69%</span>
+                    </p>
                   </div>
-                  <div className="p-5 text-center bg-[var(--accent-dim)]">
-                    <span className="mono text-[11px] text-[var(--accent)]">BUNDLE</span>
+                  <div className="col-span-3">
+                    <p className="mono text-[12px] text-[var(--text-3)]">Launch price · limited time</p>
+                  </div>
+                  <div className="col-span-2 text-right">
+                    <button
+                      onClick={() => handleCheckout(bundlePriceId, 'bundle')}
+                      disabled={loading === 'bundle'}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] text-white text-[13px] font-medium
+                        rounded-full hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-40">
+                      {loading === 'bundle' ? '...' : 'Get bundle →'}
+                    </button>
                   </div>
                 </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
 
-                {[
-                  { label: 'Price', free: '$0', individual: '$19/ea', bundle: '$29' },
-                  { label: 'Skills included', free: '1', individual: '1', bundle: '5' },
-                  { label: 'Cost per skill', free: 'Free', individual: '$19', bundle: '$5.80' },
-                  { label: 'Future updates', free: '✓', individual: '✓', bundle: '✓' },
-                  { label: 'Config templates', free: '—', individual: '✓', bundle: '✓' },
-                  { label: 'Priority support', free: '—', individual: '—', bundle: '✓' },
-                ].map((row, i) => (
-                  <div key={i} className="grid grid-cols-4 border-b border-[var(--border)] last:border-0">
-                    <div className="p-4 border-r border-[var(--border)] text-sm text-[var(--text-2)]">{row.label}</div>
-                    <div className="p-4 border-r border-[var(--border)] text-sm text-[var(--text-3)] text-center mono">{row.free}</div>
-                    <div className="p-4 border-r border-[var(--border)] text-sm text-[var(--text-2)] text-center mono">{row.individual}</div>
-                    <div className="p-4 text-sm text-[var(--accent)] text-center mono bg-[var(--accent-dim)]">{row.bundle}</div>
+        {/* ─── How it works ─── */}
+        <section className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[1100px] mx-auto">
+            <Reveal>
+              <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">How it works</p>
+              <h2 className="text-3xl font-bold mb-16">Download. Drop in. Done.</h2>
+            </Reveal>
+            <div className="grid grid-cols-3 gap-16">
+              {[
+                { num: '01', title: 'Download', desc: 'Get the SKILL.md file. Each skill is a single file — no dependencies, no installation, no build step.' },
+                { num: '02', title: 'Place it', desc: 'Copy to your .claude/skills/ directory or anywhere in your workspace. Claude auto-discovers it.' },
+                { num: '03', title: 'Use it', desc: 'Just start talking. Trigger phrases activate the right workflows automatically. No commands to remember.' },
+              ].map((step, i) => (
+                <Reveal key={i} delay={i * 0.1}>
+                  <div>
+                    <span className="mono text-4xl font-bold text-[var(--border)]">{step.num}</span>
+                    <h3 className="text-lg font-semibold mt-4 mb-3">{step.title}</h3>
+                    <p className="text-[14px] text-[var(--text-3)] leading-relaxed">{step.desc}</p>
                   </div>
-                ))}
-              </div>
-            </FadeIn>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
 
-            <FadeIn delay={0.2}>
-              <div className="mt-8 flex gap-4">
-                <a href="/downloads/seo-research-agent-free.zip"
-                  className="flex-1 py-3.5 text-center text-sm font-medium border border-[var(--border)] text-[var(--text-2)]
-                    hover:border-[var(--border-hover)] hover:text-[var(--text)] transition-all duration-200">
-                  Download free sample
-                </a>
-                <button
-                  onClick={() => handleCheckout(bundlePriceId, 'pricing-bundle')}
-                  disabled={loading === 'pricing-bundle'}
-                  className="flex-1 py-3.5 text-center text-sm font-semibold bg-[var(--accent)] text-[var(--bg)]
-                    hover:brightness-110 transition-all duration-200 disabled:opacity-40">
-                  {loading === 'pricing-bundle' ? 'Loading...' : 'Get the bundle — $29'}
-                </button>
+        {/* ─── Pricing ─── */}
+        <section id="pricing" className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[700px] mx-auto">
+            <Reveal>
+              <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">Pricing</p>
+              <h2 className="text-3xl font-bold mb-4">Try free. Buy what you need.</h2>
+              <p className="text-[var(--text-2)] mb-14">No subscriptions. One-time purchase. Yours forever.</p>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="space-y-6">
+                {/* Free */}
+                <div className="flex items-center justify-between py-5 border-b border-[var(--border)]">
+                  <div>
+                    <h3 className="font-semibold">Free Sample</h3>
+                    <p className="text-[13px] text-[var(--text-3)] mt-1">Full SEO Research Agent — no signup required</p>
+                  </div>
+                  <a href="/downloads/seo-research-agent-free.zip"
+                    className="mono text-[13px] font-medium text-[var(--accent)] hover:underline">
+                    Download →
+                  </a>
+                </div>
+
+                {/* Individual */}
+                <div className="flex items-center justify-between py-5 border-b border-[var(--border)]">
+                  <div>
+                    <h3 className="font-semibold">Individual Skill</h3>
+                    <p className="text-[13px] text-[var(--text-3)] mt-1">Any single agent from the catalog</p>
+                  </div>
+                  <span className="mono text-lg font-semibold">$19</span>
+                </div>
+
+                {/* Bundle */}
+                <div className="flex items-center justify-between py-5 px-6 -mx-6 bg-[var(--accent-soft)] rounded-xl">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <h3 className="font-semibold">Full Bundle</h3>
+                      <span className="mono text-[10px] font-medium text-[var(--accent)] bg-white px-2 py-0.5 rounded-full">BEST VALUE</span>
+                    </div>
+                    <p className="text-[13px] text-[var(--text-3)] mt-1">
+                      All 5 skills · <span className="line-through">$95</span> → $29 · save 69%
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleCheckout(bundlePriceId, 'pricing')}
+                    disabled={loading === 'pricing'}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text)] text-[var(--bg)] text-[13px] font-medium
+                      rounded-full hover:bg-[var(--text-2)] transition-colors disabled:opacity-40">
+                    {loading === 'pricing' ? '...' : 'Get bundle →'}
+                  </button>
+                </div>
               </div>
-            </FadeIn>
+            </Reveal>
           </div>
         </section>
 
         {/* ─── FAQ ─── */}
-        <section className="py-32 px-8 border-t border-[var(--border)]">
-          <div className="max-w-[800px] mx-auto">
-            <FadeIn>
-              <span className="mono text-[11px] tracking-[0.2em] text-[var(--accent)] font-medium">FAQ</span>
-              <h2 className="text-3xl font-bold mt-4 mb-16">Common questions.</h2>
-            </FadeIn>
+        <section className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[700px] mx-auto">
+            <Reveal>
+              <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-4">FAQ</p>
+              <h2 className="text-3xl font-bold mb-14">Questions</h2>
+            </Reveal>
 
             {[
-              { q: 'What is a SKILL.md file?', a: 'A structured markdown file that gives Claude specialized instructions for a specific workflow. Frontmatter defines metadata and trigger phrases. The body contains detailed instructions, examples, and edge cases. Think of it as a training manual, not a one-off prompt.' },
-              { q: 'What tools do I need?', a: 'Claude Code, OpenClaw, or any agent system that reads SKILL.md files. No special software, API keys, or infrastructure. Just a text file in the right directory.' },
-              { q: 'Can I edit them?', a: 'They\'re plain markdown. Edit anything — workflows, tone, terminology, examples. That\'s the point. These are starting points you make your own.' },
-              { q: 'How is this different from a ChatGPT prompt?', a: 'Skills are persistent, structured, and auto-activating. Claude loads them every session without you re-pasting anything. They include trigger phrases, multi-step workflows, real examples, config templates, and troubleshooting. It\'s the difference between giving verbal instructions and giving someone a training manual.' },
-              { q: 'What if it doesn\'t work for my use case?', a: 'Download the free SEO Research Agent first. It\'s the full product — not a demo. If that workflow pattern works for you, the others follow the same structure.' },
+              { q: 'What is a SKILL.md file?', a: 'A structured markdown file that teaches Claude specific workflows. Frontmatter defines trigger phrases. The body has instructions, examples, and edge cases. It\'s a training manual, not a one-off prompt.' },
+              { q: 'What tools do I need?', a: 'Claude Code, OpenClaw, or any system that reads SKILL.md files. No special software or API keys.' },
+              { q: 'Can I customize them?', a: 'They\'re plain markdown. Change anything — workflows, terminology, examples. They\'re starting points.' },
+              { q: 'How is this different from a prompt?', a: 'Skills persist across sessions, auto-activate on matching prompts, include multi-step workflows with decision logic, and have troubleshooting built in. Prompts disappear when you close the chat.' },
+              { q: 'What if I don\'t like it?', a: 'Download the free SEO Research Agent first. Same quality, same structure. If it works for you, the others will too.' },
             ].map((item, i) => (
-              <FadeIn key={i} delay={i * 0.06}>
-                <div className="border-b border-[var(--border)] py-7 group">
-                  <h3 className="font-semibold mb-3 text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">{item.q}</h3>
-                  <p className="text-sm text-[var(--text-3)] leading-relaxed max-w-2xl">{item.a}</p>
+              <Reveal key={i} delay={i * 0.04}>
+                <div className="py-6 border-b border-[var(--border)] group">
+                  <h3 className="font-semibold text-[15px] mb-2 group-hover:text-[var(--accent)] transition-colors cursor-default">
+                    {item.q}
+                  </h3>
+                  <p className="text-[14px] text-[var(--text-3)] leading-relaxed">{item.a}</p>
                 </div>
-              </FadeIn>
+              </Reveal>
             ))}
           </div>
         </section>
 
+        {/* ─── Final CTA ─── */}
+        <section className="py-24 px-6 border-t border-[var(--border)]">
+          <div className="max-w-[700px] mx-auto text-center">
+            <Reveal>
+              <h2 className="text-3xl font-bold mb-4">Stop re-explaining your workflows.</h2>
+              <p className="text-[var(--text-2)] mb-10 text-lg">Teach Claude once. Let it remember.</p>
+              <div className="flex items-center justify-center gap-4">
+                <a href="/downloads/seo-research-agent-free.zip"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-[var(--text)] text-[var(--bg)] text-[14px] font-medium
+                    rounded-full hover:bg-[var(--text-2)] transition-colors">
+                  Try the free sample
+                </a>
+                <button
+                  onClick={() => handleCheckout(bundlePriceId, 'bottom')}
+                  disabled={loading === 'bottom'}
+                  className="inline-flex items-center gap-2 px-7 py-3 border border-[var(--border)] text-[14px] font-medium
+                    rounded-full hover:border-[var(--border-hover)] transition-colors disabled:opacity-40">
+                  {loading === 'bottom' ? '...' : 'All 5 for $29 →'}
+                </button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ─── Footer ─── */}
-        <footer className="border-t border-[var(--border)] py-12 px-8">
-          <div className="max-w-[1200px] mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <span className="text-sm font-medium text-[var(--text-3)]">LucidStack</span>
-              <span className="mono text-xs text-[var(--text-3)]">© 2026</span>
-            </div>
-            <a href="mailto:support@lucidstack.ai" className="mono text-xs text-[var(--text-3)] hover:text-[var(--accent)] transition-colors">
+        <footer className="border-t border-[var(--border)] py-10 px-6">
+          <div className="max-w-[1100px] mx-auto flex items-center justify-between">
+            <span className="text-[13px] text-[var(--text-3)]">© 2026 LucidStack.ai</span>
+            <a href="mailto:support@lucidstack.ai" className="mono text-[12px] text-[var(--text-3)] hover:text-[var(--text)] transition-colors">
               support@lucidstack.ai
             </a>
           </div>
