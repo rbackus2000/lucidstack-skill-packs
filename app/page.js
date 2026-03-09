@@ -101,7 +101,7 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-[var(--bg)]/90 backdrop-blur-lg border-b border-[var(--border)]">
         <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
           <a href="https://lucidstack.ai" className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="" className="h-6 w-6" />
+            <img src="/logo.png" alt="" className="h-9 w-9 -my-4" />
             <span className="font-semibold text-[15px] tracking-tight text-[var(--text)]">LucidStack</span>
           </a>
           <div className="flex items-center gap-8">
