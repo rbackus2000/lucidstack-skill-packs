@@ -102,51 +102,158 @@ export default function Home() {
 
       <main>
         {/* ─── Hero ─── */}
-        <section className="pt-24 pb-20 px-6">
-          <div className="max-w-[1100px] mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="max-w-2xl"
-            >
-              <p className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-6">
+        <section className="pt-24 pb-20 px-6 overflow-hidden">
+          <div className="max-w-[1100px] mx-auto relative">
+            {/* Floating skill tags — scattered around the hero */}
+            {[
+              { label: 'sales-outreach', x: '72%', y: '8%', delay: 1.5, dur: 18 },
+              { label: 'code-review', x: '85%', y: '35%', delay: 2.1, dur: 22 },
+              { label: 'content-pipeline', x: '68%', y: '62%', delay: 1.8, dur: 20 },
+              { label: 'customer-support', x: '90%', y: '75%', delay: 2.5, dur: 16 },
+              { label: 'seo-research', x: '78%', y: '90%', delay: 1.2, dur: 24 },
+            ].map((tag, i) => (
+              <motion.div
+                key={i}
+                className="absolute hidden lg:block mono text-[11px] text-[var(--text-3)]/40 select-none pointer-events-none"
+                style={{ left: tag.x, top: tag.y }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{
+                  opacity: [0, 0.4, 0.4, 0],
+                  y: [0, -30, -60, -90],
+                }}
+                transition={{
+                  duration: tag.dur,
+                  delay: tag.delay,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+              >
+                {tag.label}.md
+              </motion.div>
+            ))}
+
+            <div className="max-w-2xl relative z-10">
+              {/* Animated label */}
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mono text-[12px] tracking-wide text-[var(--accent)] font-medium mb-6 flex items-center gap-2"
+              >
+                <motion.span
+                  animate={{ opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)]"
+                />
                 Agent Skills for Claude Code
-              </p>
+              </motion.p>
+
+              {/* Headline with staggered word reveal */}
               <h1 className="text-[clamp(2.8rem,5.5vw,4.2rem)] font-bold leading-[1.08] tracking-tight mb-6">
-                Teach Claude<br />
-                once. Benefit<br />
-                every session.
+                {['Teach', 'Claude'].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.6, delay: 0.3 + i * 0.12 }}
+                    className="inline-block mr-[0.3em]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <br />
+                {['once.', 'Benefit'].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.6, delay: 0.55 + i * 0.12 }}
+                    className="inline-block mr-[0.3em]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <br />
+                <motion.span
+                  initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  className="inline-block"
+                >
+                  every{' '}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.6, delay: 0.92 }}
+                  className="inline-block relative"
+                >
+                  session.
+                  {/* Underline draw */}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-[3px] bg-[var(--accent)] rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.8, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                </motion.span>
               </h1>
-              <p className="text-xl text-[var(--text-2)] leading-relaxed max-w-lg mb-10">
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.1 }}
+                className="text-xl text-[var(--text-2)] leading-relaxed max-w-lg mb-10"
+              >
                 Drop a SKILL.md file into your workspace. Claude loads it automatically 
                 and becomes a specialized agent. No configuration needed.
-              </p>
-              <div className="flex items-center gap-4">
-                <a href="/downloads/seo-research-agent-free.zip"
+              </motion.p>
+
+              {/* CTA buttons with stagger */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.3 }}
+                className="flex items-center gap-4"
+              >
+                <motion.a
+                  href="/downloads/seo-research-agent-free.zip"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-[14px] font-medium
-                    rounded-full hover:bg-[var(--text-2)] transition-colors">
+                    rounded-full hover:bg-[var(--text-2)] transition-colors"
+                >
                   Download free sample
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3 6.5M7 10l4-3.5M2 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </a>
-                <button
+                  <motion.svg
+                    width="14" height="14" viewBox="0 0 14 14" fill="none"
+                    animate={{ y: [0, 2, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    <path d="M7 1v9m0 0L3 6.5M7 10l4-3.5M2 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </motion.svg>
+                </motion.a>
+                <motion.button
+                  whileHover={{ x: 4 }}
                   onClick={() => handleCheckout(bundlePriceId, 'hero')}
                   disabled={loading === 'hero'}
                   className="inline-flex items-center gap-2 px-6 py-3 text-[14px] font-medium text-[var(--text-2)]
-                    hover:text-[var(--text)] transition-colors disabled:opacity-40">
+                    hover:text-[var(--text)] transition-colors disabled:opacity-40"
+                >
                   {loading === 'hero' ? 'Loading...' : 'Get all 5 — $29 →'}
-                </button>
-              </div>
-            </motion.div>
+                </motion.button>
+              </motion.div>
+            </div>
 
-            {/* Terminal */}
+            {/* Terminal with typewriter effect */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              initial={{ opacity: 0, y: 40, rotateX: 8 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ duration: 1, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
               className="mt-16 max-w-2xl"
+              style={{ perspective: 800 }}
             >
-              <div className="bg-[var(--code-bg)] rounded-xl overflow-hidden shadow-2xl shadow-black/10">
+              <div className="bg-[var(--code-bg)] rounded-xl overflow-hidden shadow-2xl shadow-black/10
+                hover:shadow-black/20 transition-shadow duration-500">
                 <div className="px-4 py-3 flex items-center gap-2 border-b border-white/5">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
@@ -154,12 +261,56 @@ export default function Home() {
                   <span className="mono text-[11px] text-white/30 ml-4">Terminal</span>
                 </div>
                 <div className="p-6 mono text-[13px] leading-[2] text-white/60">
-                  <div><span className="text-emerald-400">~</span> cp skill.md .claude/skills/sales-outreach/</div>
-                  <div className="text-white/25">done.</div>
-                  <div className="mt-1"><span className="text-emerald-400">~</span> claude</div>
-                  <div className="text-white/80">Loaded: <span className="text-amber-300">sales-outreach-agent</span> <span className="text-white/30">(287 lines)</span></div>
-                  <div className="text-white/50">Try: &ldquo;Research leads at Stripe&rdquo;</div>
-                  <div className="mt-1"><span className="text-emerald-400">~</span> <span className="animate-pulse text-white/60">▊</span></div>
+                  {/* Line 1 — staggered reveal */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.0 }}
+                  >
+                    <span className="text-emerald-400">~</span> cp skill.md .claude/skills/sales-outreach/
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.5 }}
+                    className="text-white/25"
+                  >
+                    done.
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 3.0 }}
+                    className="mt-1"
+                  >
+                    <span className="text-emerald-400">~</span> claude
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 3.5 }}
+                    className="text-white/80"
+                  >
+                    Loaded: <span className="text-amber-300">sales-outreach-agent</span>{' '}
+                    <span className="text-white/30">(287 lines, 8 triggers, 3 workflows)</span>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 4.0 }}
+                    className="text-white/50"
+                  >
+                    Try: &ldquo;Research leads at Stripe&rdquo;
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 4.3 }}
+                    className="mt-1"
+                  >
+                    <span className="text-emerald-400">~</span>{' '}
+                    <span className="animate-pulse text-white/60">▊</span>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
