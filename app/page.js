@@ -99,9 +99,9 @@ export default function Home() {
     <>
       {/* ─── Nav ─── */}
       <nav className="sticky top-0 z-50 bg-[var(--bg)]/90 backdrop-blur-lg border-b border-[var(--border)]">
-        <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
+        <div className="max-w-[1100px] mx-auto px-6 h-16 flex items-center justify-between">
           <a href="https://lucidstack.ai" className="flex items-center">
-            <img src="/logo.png" alt="LucidStack" className="h-[72px] w-auto" style={{ margin: '-28px 0' }} />
+            <img src="/logo.png" alt="LucidStack" className="h-[88px] w-auto" style={{ margin: '-20px 0' }} />
           </a>
           <div className="flex items-center gap-8">
             <a href="#skills" className="text-[13px] text-[var(--text-2)] hover:text-[var(--text)] transition-colors">Skills</a>
