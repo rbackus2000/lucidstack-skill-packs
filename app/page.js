@@ -6,6 +6,15 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 // ─── Data ───────────────────────────────────────────────────────────
 const skills = [
   {
+    id: 'web-design',
+    name: 'Premium Web Design',
+    description: 'Build award-quality websites that break every AI design pattern',
+    capabilities: ['6 design directions with references', 'Choreographed Framer Motion animations', '7 typography pairings (no Inter/Poppins)', 'Anti-pattern checklist (10 checks)'],
+    lines: 372,
+    priceId: 'price_1T8sOa9TtKvyXKLaclSxAmUG',
+    featured: true,
+  },
+  {
     id: 'sales',
     name: 'Sales Outreach',
     description: 'Lead research → personalized emails → follow-up sequences',
@@ -386,6 +395,11 @@ export default function Home() {
                       >
                         {skill.name}
                       </motion.span>
+                      {skill.featured && (
+                        <span className="mono text-[10px] font-medium text-amber-600 border border-amber-600/30 bg-amber-50 px-1.5 py-0.5 rounded">
+                          NEW
+                        </span>
+                      )}
                       {skill.free && (
                         <span className="mono text-[10px] font-medium text-[var(--accent)] border border-[var(--accent)]/30 px-1.5 py-0.5 rounded">
                           FREE
