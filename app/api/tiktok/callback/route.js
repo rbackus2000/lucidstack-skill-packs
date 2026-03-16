@@ -32,19 +32,49 @@ export async function GET(req) {
 
   try {
     // Exchange code for access token
+    const clientKey = 'sbaww6mqvotdqmxp0e'
+    const clientSecret = 'FyJ5eixEviM5EASlYucnFmLCaQf32PRG'
+    const redirectUri = 'https://skills.lucidstack.ai/api/tiktok/callback'
+    
+    // Log what we're sending (for debugging)
+    console.log('[TikTok] Token exchange with client_key:', clientKey, 'redirect_uri:', redirectUri)
+    
     const tokenRes = await fetch('https://open.tiktokapis.com/v2/oauth/token/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cache-Control': 'no-cache',
+      },
       body: new URLSearchParams({
-        client_key: process.env.TIKTOK_CLIENT_KEY,
-        client_secret: process.env.TIKTOK_CLIENT_SECRET,
-        code,
+        client_key: clientKey,
+        client_secret: clientSecret,
+        code: code,
         grant_type: 'authorization_code',
-        redirect_uri: `${process.env.NEXT_PUBLIC_URL}/api/tiktok/callback`,
+        redirect_uri: redirectUri,
       }),
     })
 
     const tokenData = await tokenRes.json()
+    
+    // Show debug info on error
+    if (tokenData.error) {
+      return new NextResponse(
+        `<html><body style="background:#0a0a0a;color:#fff;font-family:system-ui;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column">
+          <h1 style="color:#ff4444">❌ Token Exchange Failed</h1>
+          <pre style="color:#888;max-width:700px;overflow:auto;font-size:12px">${JSON.stringify({
+            error: tokenData,
+            debug: {
+              client_key_used: clientKey,
+              redirect_uri_used: redirectUri,
+              code_received: code.substring(0, 10) + '...',
+              env_key_set: !!process.env.TIKTOK_CLIENT_KEY,
+              env_secret_set: !!process.env.TIKTOK_CLIENT_SECRET,
+            }
+          }, null, 2)}</pre>
+        </body></html>`,
+        { headers: { 'Content-Type': 'text/html' } }
+      )
+    }
 
     if (tokenData.error || !tokenData.access_token) {
       return new NextResponse(
